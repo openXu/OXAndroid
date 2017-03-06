@@ -1,0 +1,30 @@
+ext {
+
+    android = [
+
+            javaVersion : JavaVersion.VERSION_1_8,
+
+            compileSdkVersion: 24,
+            buildToolsVersion: "24.0.0",
+
+            minSdkVersion    : 14,
+            targetSdkVersion : 24,
+
+            versionCode      : 1,
+            versionName      : '1.0.0',
+
+            VSupportSdk      : '24.0.0'
+    ]
+
+    dependencies = [
+            "appcompat-v7"   : "com.android.support:appcompat-v7:${android["VSupportSdk"]}",
+            "design"         : "com.android.support:design:${android["VSupportSdk"]}",
+            //View注入框架
+            "butterknife"    : "com.jakewharton:butterknife:8.5.1",
+            "butterknife-apt": "com.jakewharton:butterknife-compiler:8.5.1",
+            //gson
+            "gson"           : "com.google.code.gson:gson:2.6.2",
+            //
+            "eventbus"       : "org.greenrobot:eventbus:3.0.0"
+    ]
+}
