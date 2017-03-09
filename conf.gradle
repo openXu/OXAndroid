@@ -4,16 +4,16 @@ ext {
 
             javaVersion : JavaVersion.VERSION_1_8,
 
-            compileSdkVersion: 24,
-            buildToolsVersion: "24.0.0",
+            compileSdkVersion: 25,
+            buildToolsVersion: "25.0.1",
 
-            minSdkVersion    : 14,
-            targetSdkVersion : 24,
+            minSdkVersion    :  15,
+            targetSdkVersion : 25,
 
             versionCode      : 1,
             versionName      : '1.0.0',
 
-            VSupportSdk      : '24.0.0'
+            VSupportSdk      : '25.0.1'
     ]
 
     dependencies = [
@@ -24,7 +24,8 @@ ext {
             "butterknife-apt": "com.jakewharton:butterknife-compiler:8.5.1",
             //gson
             "gson"           : "com.google.code.gson:gson:2.6.2",
-            //
+            //EventBus事件发布和订阅框架
             "eventbus"       : "org.greenrobot:eventbus:3.0.0"
+
     ]
 }

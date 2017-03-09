@@ -10,19 +10,16 @@
     android:orientation="vertical"
     tools:context="com.openxu.libdemo.MainActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="1.支持lambda语法
-2.butterknife注入框架
-3.gson  "/>
-
     <Button
-        android:id="@+id/btn_eventbus"
+        android:id="@+id/btn_eventbus1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="EventBus事件发布和订阅"/>
-
+        android:text="更新上一个界面"/>
+    <Button
+        android:id="@+id/btn_eventbus2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="更新本界面"/>
 
 
 </LinearLayout>

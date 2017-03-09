@@ -29,7 +29,7 @@ public class LogUtil {
     public static void v(Object TAG, String msg) {
         if (OXConfig.DEBUG){
             msg=formNull(msg);
-            Log.v(TAG.getClass().getName(), msg);
+            Log.v(TAG.getClass().getSimpleName(), msg);
         }
     }
 
@@ -45,7 +45,7 @@ public class LogUtil {
     public static void d(Object TAG, String msg) {
         if (OXConfig.DEBUG){
             msg=formNull(msg);
-            Log.d(TAG.getClass().getName(), msg);
+            Log.d(TAG.getClass().getSimpleName(), msg);
         }
     }
 
@@ -61,7 +61,7 @@ public class LogUtil {
     public static void i(Object TAG, String msg) {
         if (OXConfig.DEBUG){
             msg=formNull(msg);
-            Log.i(TAG.getClass().getName(), msg);
+            Log.i(TAG.getClass().getSimpleName(), msg);
         }
     }
 
@@ -77,7 +77,7 @@ public class LogUtil {
     public static void w(Object TAG, String msg) {
         if (OXConfig.DEBUG){
             msg=formNull(msg);
-            Log.w(TAG.getClass().getName(), msg);
+            Log.w(TAG.getClass().getSimpleName(), msg);
         }
     }
 
@@ -93,7 +93,7 @@ public class LogUtil {
     public static void e(Object TAG, String msg) {
         if (OXConfig.DEBUG){
             msg=formNull(msg);
-            Log.e(TAG.getClass().getName(), msg);
+            Log.e(TAG.getClass().getSimpleName(), msg);
         }
     }
 

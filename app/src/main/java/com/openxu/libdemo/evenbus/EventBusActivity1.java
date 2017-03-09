@@ -1,32 +1,36 @@
-package com.openxu.libdemo;
+package com.openxu.libdemo.evenbus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.openxu.libdemo.evenbus.EventBusActivity1;
-import com.openxu.libdemo.evenbus.MessageEvent;
+import com.openxu.libdemo.R;
 import com.openxu.oxlib.base.BaseActivity;
 import com.openxu.oxlib.utils.LogUtil;
 import com.openxu.oxlib.utils.ToastAlone;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+/**
+ * Created by openXu on 2017/3/7.
+ */
+
+public class EventBusActivity1 extends BaseActivity {
 
 
-    @BindView(R.id.btn_eventbus)
-    Button btn_eventbus;
+    @BindView(R.id.btn_eventbus1)
+    Button btnEventbus1;
+    @BindView(R.id.btn_eventbus2)
+    Button btnEventbus2;
 
     @Override
     protected int getLayoutID() {
-        return R.layout.activity_main;
+        return R.layout.activity_eventbus1;
     }
 
     @Override
@@ -37,8 +41,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setListener() {
         //lambda表达式
-        btn_eventbus.setOnClickListener(v->{
-            startActivity(new Intent(this, EventBusActivity1.class));
+        btnEventbus1.setOnClickListener(v -> {
+            EventBus.getDefault().post(new MessageEvent(1, "上个页面"));
+        });
+        btnEventbus2.setOnClickListener(v -> {
+            EventBus.getDefault().post(new MessageEvent(2, "当前页面"));
         });
     }
 
@@ -53,6 +60,7 @@ public class MainActivity extends BaseActivity {
         LogUtil.i(this, event.toString());
         ToastAlone.show(event.toString());
     }
+
 
 
 }

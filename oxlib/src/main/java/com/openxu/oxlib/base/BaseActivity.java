@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -34,6 +36,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initView();
     protected void setListener(){}
     protected abstract void initData();
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     protected void onDestroy() {
