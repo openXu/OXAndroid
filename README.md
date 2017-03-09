@@ -22,7 +22,7 @@
 
 ##3. gson
 
-##3. EventBus事件发布和订阅框架
+##4. EventBus事件发布和订阅框架
 > EventBus in 3 steps
 
 ①. Define events:
@@ -60,9 +60,41 @@
 
 
 
+##5. 通用的TitleBar，扩展性好，自由度高
+> 使用方法（需要展示什么就配置相应的属性值）
 
+①. 布局文件中设置属性
+```xml
+   <com.openxu.oxlib.view.TitleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TitleDefStyle"
+        openxu:textLeft="本月任务"
+        openxu:textcenter="center"
+        openxu:textRight="right"
+        openxu:iconLeft="@mipmap/home_nav_icon_task"
+        openxu:iconCenterRow="@android:drawable/arrow_down_float"
+        openxu:iconRightPop="@mipmap/home_nav_icon_task"
+        openxu:iconRight="@mipmap/home_nav_icon_task"/>
+```
+②. 代码中设置
+```xml
+    <com.openxu.oxlib.view.TitleLayout
+      android:id="@+id/title_Layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      style="@style/TitleDefStyle"/>
+```
+```Java
+ title_Layout.setBackgroundColor1(Color.RED)
+                .setTextLeft("我是左侧标题")
+                .setIconLeft(R.mipmap.home_nav_icon_task)
+                .setIconRight(R.mipmap.home_nav_icon_dot)
+                .show();
+```
 
-
+③. 相关资源文件
+> drawable/menu_icon_more.png
 
 
 

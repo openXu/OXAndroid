@@ -1,0 +1,45 @@
+<resources>
+
+    <!--自定义标题栏样式-->
+    <style name="TitleDefStyle" >
+        <item name="titleHeight">50dip</item>
+        <item name="textSize">16</item>      <!--文字大小-->
+        <item name="textColor">@android:color/white</item>     <!--文字颜色-->
+        <item name="textIconSpace">5dip</item>    <!--文字和图标之间的间距-->
+        <item name="leftSpace">20dip</item>    <!--标题左侧的空隙-->
+        <item name="rightSpace">20dip</item>   <!--标题右侧的空隙-->
+        <item name="centerRowSpace">1dip</item><!--中间箭头和文字的距离-->
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+<!--        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+     <!--   <item name="android:windowBackground">@color/main_style</item>-->
+        <item name="android:windowAnimationStyle">@style/base_activity_animation</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:clipToPadding">true</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+    </style>
+
+    <!--activity滑动出入动画-->
+    <style name="base_activity_animation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_stay_orig</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_stay_orig</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_slide_right_out</item>
+        <item name="android:taskOpenEnterAnimation">@anim/activity_slide_right_in</item>
+        <item name="android:taskOpenExitAnimation">@anim/activity_stay_orig</item>
+        <item name="android:taskCloseEnterAnimation">@anim/activity_stay_orig</item>
+        <item name="android:taskCloseExitAnimation">@anim/activity_slide_right_out</item>
+        <item name="android:taskToFrontEnterAnimation">@anim/activity_slide_right_in</item>
+        <item name="android:taskToFrontExitAnimation">@anim/activity_stay_orig</item>
+        <item name="android:taskToBackEnterAnimation">@anim/activity_stay_orig</item>
+        <item name="android:taskToBackExitAnimation">@anim/activity_slide_right_out</item>
+    </style>
+
+</resources>
