@@ -98,8 +98,81 @@
 
 
 
+##6. 6.0运行时权限处理PermissionUtils
+> 需要注意的是：
+
+并不是应用所需的所有权限都应该在BaseActivity中申请，
+BaseActivity中处理的通常是应用必须使用、且目标机型上都必须有的权限，比如读写存储、照相机等必要权限；
+但是NFC权限就不应该在baseActivity中申请，而是在使用的那个activity中判断，
+因为有很多手机不支持NFC，那判断授权的结果就是不通过。通常NFC的使用场景比较少，
+不能因为手机没有NFC功能就不让用应用了（除非是NFC专用功能应用）。
+
+此处只是举个例子，具体的权限管理应根据自己应用的情况考虑
 
 
+> 使用：在BaseActivity中添加如下代码即可
+
+```Java
+
+    /**需要申请的权限*/
+    static final String[] PERMISSION = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, // 写入权限
+            Manifest.permission.READ_EXTERNAL_STORAGE,  //读取权限
+            Manifest.permission.CAMERA, //摄像头
+            Manifest.permission.RECORD_AUDIO //录音
+//            Manifest.permission.NFC
+    };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        checkCameraPermission();
+    }
+    /**所有权限被通过时调用，比如splash界面，当权限被允许后，跳转主界面*/
+    protected void allPermissionGranted() {
+    }
+    /**6.0权限*/
+    private void checkCameraPermission() {
+        LogUtil.i(TAG, "======================申请系列必要权限========================");
+        if (PermissionUtils.checkPermissionArray(this, PERMISSION, PermissionUtils.PERMISSION_ARRAY)) {
+            LogUtil.i(TAG, "系列必要权限全部通过");
+            allPermissionGranted();
+        } else {
+            LogUtil.e(TAG, "系列必要权限有部分未通过");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PermissionUtils.PERMISSION_ARRAY:
+                List<String> list = new ArrayList<>();
+                if (PermissionUtils.verifyPermissions(grantResults, permissions, list)) {
+                    LogUtil.d(TAG, "权限组被允许");
+                    allPermissionGranted();
+                } else {
+                    String pers = PermissionUtils.getUnRrantName(list);
+                    LogUtil.e(TAG, pers + "权限被拒绝了");
+                    // Permission Denied
+                    String msg = "当前应用缺少"+(list.size() > 1 ? (list.size() + "项"):" ")+"必要权限。\n详情如下：\n"
+                            + pers +
+                            "请点击\"设置\"-\"权限\"-打开所需权限后继续使用\n" ;
+                    new AlertDialog.Builder(this)
+                            .setTitle("权限申请")
+                            .setMessage(msg)
+                            .setPositiveButton("去设置", (DialogInterface dialogInterface, int i)-> {
+                                PermissionUtils.showInstalledAppDetails(this, getPackageName());
+                            })
+                            .setNegativeButton("取消", (DialogInterface dialogInterface, int i)-> {
+                                //退出
+                                finish();
+                            }).setCancelable(false)
+                            .show();
+                }
+                break;
+        }
+    }
+```
 
 
 
