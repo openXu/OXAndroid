@@ -36,6 +36,11 @@ import butterknife.Unbinder;
  * project : OXAndroid
  * version : 1.0
  * class describe：
+ * activity基类，包含如下操作：
+ * 1. 初始化titleLayout
+ * 2. 运行时权限处理
+ * 3. 模板方法
+ *
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
