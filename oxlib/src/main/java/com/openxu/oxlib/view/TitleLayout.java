@@ -22,9 +22,12 @@ import com.openxu.oxlib.utils.LogUtil;
 
 
 /**
- * Created by openXu on 2017/3/9.
+ * autour: openXu
+ * date: 2017/3/10 13:32
+ * className: TitleLayout
+ * version:
+ * description: 通用的titlebar
  */
-
 public class TitleLayout extends RelativeLayout {
 
 
@@ -117,7 +120,7 @@ public class TitleLayout extends RelativeLayout {
         rightSpace = ta.getDimension(R.styleable.TitleView_rightSpace, 0);
         centerRowSpace = ta.getDimension(R.styleable.TitleView_centerRowSpace, 0);
 
-        /*LogUtil.i(TAG, "textLeft = "+textLeft);
+       /* LogUtil.i(TAG, "textLeft = "+textLeft);
         LogUtil.i(TAG, "textcenter = "+textcenter);
         LogUtil.i(TAG, "textRight = "+textRight);
         LogUtil.i(TAG, "iconBack = "+iconBack);
@@ -131,8 +134,8 @@ public class TitleLayout extends RelativeLayout {
         LogUtil.i(TAG, "textIconSpace = "+textIconSpace);
         LogUtil.i(TAG, "leftSpace = "+leftSpace);
         LogUtil.i(TAG, "rightSpace = "+rightSpace);
-        LogUtil.i(TAG, "centerRowSpace = "+centerRowSpace);*/
-
+        LogUtil.i(TAG, "centerRowSpace = "+centerRowSpace);
+*/
         ta.recycle();
         show();
     }
@@ -369,7 +372,7 @@ public class TitleLayout extends RelativeLayout {
 
 
     public TitleLayout setBackgroundColor1(int Color){
-        setBackgroundColor(Color);
+        titleLayout.setBackgroundColor(Color);
         return this;
     }
 
