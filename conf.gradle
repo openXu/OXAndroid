@@ -25,7 +25,10 @@ ext {
             //gson
             "gson"           : "com.google.code.gson:gson:2.6.2",
             //EventBus事件发布和订阅框架
-            "eventbus"       : "org.greenrobot:eventbus:3.0.0"
+            "eventbus"       : "org.greenrobot:eventbus:3.0.0",
+            "okhttp"       : "com.zhy:okhttputils:2.5.2"
+
+
 
     ]
 }

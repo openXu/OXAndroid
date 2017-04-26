@@ -10,7 +10,7 @@ buildscript {
     }
     //依赖包的定义。支持maven/ivy，远程，本地库，也支持单文件
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.0'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
 
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'

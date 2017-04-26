@@ -54,10 +54,10 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 需要申请的权限
      */
     static final String[] PERMISSION = new String[]{
-            Manifest.permission.WRITE_EXTERNAL_STORAGE, // 写入权限
+         /*   Manifest.permission.WRITE_EXTERNAL_STORAGE, // 写入权限
             Manifest.permission.READ_EXTERNAL_STORAGE,  //读取权限
             Manifest.permission.CAMERA, //摄像头
-            Manifest.permission.RECORD_AUDIO //录音
+            Manifest.permission.RECORD_AUDIO //录音*/
 //            Manifest.permission.NFC
 
     };
