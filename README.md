@@ -1,6 +1,7 @@
 #框架
 
 ##1. 支持lambda语法
+
 ①. project\build.gradle:
 >   repositories {
         mavenCentral()
@@ -176,6 +177,24 @@ BaseActivity中处理的通常是应用必须使用、且目标机型上都必�
 
 
 
+##7. 网络请求使用Retrofit https://github.com/square/retrofit
+
+> Retrofit requires at minimum Java 7 or Android 2.3.
+
+> Retrofit包含下面三个部分：
+
+>POJO或模型实体类 : 从服务器获取的JSON数据将被填充到这种类的实例中。
+
+> 接口 : 我们需要创建一个接口来管理像GET,POST...等请求的URL，这是一个服务类。
+
+> RestAdapter类 : 这是一个REST客户端(RestClient)类，retrofit中默认用的是Gson来解析JSON数据，你也可以设置自己的JSON解析器，比如jackson，我们将在下面的教程中详细解说明。
+
+①. compile 'com.squareup.retrofit2:retrofit:2.2.0'
+ 
+②. 将Rest API转换为java接口
+②. 创建模型类
+②. Retrofit会帮我们自动生成接口的实现类的实例
+②. 调用接口中定义的业务方法:get post等
 
 
 
