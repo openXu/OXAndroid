@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OXAndroid.iml" filepath="$PROJECT_DIR$/OXAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OXAndroid.iml" filepath="$PROJECT_DIR$/OXAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oxlib/oxlib.iml" filepath="$PROJECT_DIR$/oxlib/oxlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/oxlib/oxlib.iml" filepath="$PROJECT_DIR$/oxlib/oxlib.iml" />
     </modules>
   </component>
