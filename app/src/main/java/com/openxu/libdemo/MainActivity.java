@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.openxu.libdemo.evenbus.EventBusActivity1;
 import com.openxu.libdemo.evenbus.MessageEvent;
+import com.openxu.libdemo.retrofit.test.TestRetrofitActivity;
 import com.openxu.oxlib.base.BaseActivity;
 import com.openxu.oxlib.utils.LogUtil;
 import com.openxu.oxlib.utils.ToastAlone;
@@ -32,6 +33,15 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.btn_eventbus)
     Button btn_eventbus;
 
+    @BindView(R.id.btn_retrofit)
+    Button btn_retrofit;
+    @BindView(R.id.btn_toast)
+    Button btn_toast;
+    @BindView(R.id.btn_set)
+    Button btn_set;
+    @BindView(R.id.btn_serviceoast)
+    Button btn_serviceoast;
+
     @Override
     protected int getLayoutID() {
         return R.layout.activity_main;
@@ -48,7 +58,22 @@ public class MainActivity extends BaseActivity {
         btn_eventbus.setOnClickListener(v->{
             startActivity(new Intent(this, EventBusActivity1.class));
         });
+        btn_retrofit.setOnClickListener(v->{
+            startActivity(new Intent(this, TestRetrofitActivity.class));
+        });
+        btn_toast.setOnClickListener(v->{
+            ToastAlone.show(SpUtil.getInstance(this).getTest());
+        });
+        btn_set.setOnClickListener(v->{
+            SpUtil.getInstance(this).setTest();
+        });
+        btn_serviceoast.setOnClickListener(v->{
+           startService(new Intent(this, TestService.class));
+        });
+
     }
+
+
 
     @Override
     protected void initData() {
