@@ -12,18 +12,35 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-<!--        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>-->
+   <!-- <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+&lt;!&ndash;        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>&ndash;&gt;
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-     <!--   <item name="android:windowBackground">@color/main_style</item>-->
+        &lt;!&ndash;<item name="colorAccent">@color/colorAccent</item>&ndash;&gt;
+     &lt;!&ndash;   <item name="android:windowBackground">@color/main_style</item>&ndash;&gt;
         <item name="android:windowAnimationStyle">@style/base_activity_animation</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:clipToPadding">true</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
+    </style>-->
+
+
+    <!-- Base application theme. -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/color_blue</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowBackground">@color/main_style</item>
+        <item name="android:windowAnimationStyle">@style/base_activity_animation</item>
+        <item name="android:clipToPadding">true</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+    </style>
+
+    <style name="AppTheme" parent="@style/AppBaseTheme">
+        <!--不能在此配置fitsSystemWindows，会导致toast或者系统弹窗上移挪位-->
+        <!--   <item name="android:fitsSystemWindows">true</item>-->
     </style>
 
     <!--activity滑动出入动画-->

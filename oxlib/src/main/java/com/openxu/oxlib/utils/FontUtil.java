@@ -5,8 +5,6 @@ import android.graphics.Paint;
 /**
  * author : openXu
  * create at : 2017/3/6 13:58
- * blog : http://blog.csdn.net/xmxkf
- * gitHub : https://github.com/openXu
  * project : OXAndroid
  * class name : DensityUtil
  * version : 1.0

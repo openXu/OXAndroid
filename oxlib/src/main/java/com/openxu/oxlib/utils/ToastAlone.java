@@ -4,14 +4,11 @@ import android.app.Application;
 import android.widget.Toast;
 
 /**
- * author : openXu
- * create at : 2017/3/6 13:41
- * blog : http://blog.csdn.net/xmxkf
- * gitHub : https://github.com/openXu
- * project : oxlib
- * class name : ToastAlone
- * version : 1.0
- * class describe：Toast工具类
+ * autour: openXu
+ * date: 2017/6/16 10:03
+ * className: ToastAlone
+ * version:
+ * description:
  */
 public class ToastAlone {
     private static Application mApp;
@@ -21,9 +18,9 @@ public class ToastAlone {
     private static Toast mToast = null;
 
     public static void init(Application context) {
-    	mApp = context;
+        mApp = context;
     }
-     
+
     public static Toast showToast(int stringid, int lastTime) {
         if (mToast != null) {
             //mToast.cancel();
@@ -34,7 +31,6 @@ public class ToastAlone {
         mToast.show();
         return mToast;
     }
-
     public static Toast showToast(String tips, int lastTime) {
         if (mToast != null) {
             //mToast.cancel();

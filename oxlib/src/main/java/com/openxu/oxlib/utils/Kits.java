@@ -30,8 +30,6 @@ import java.util.List;
 /**
  * author : openXu
  * create at : 2017/3/6 13:41
- * blog : http://blog.csdn.net/xmxkf
- * gitHub : https://github.com/openXu
  * project : oxlib
  * class name : Kits
  * version : 1.0

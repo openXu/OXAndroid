@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TitleDefStyle"
-        openxu:iconRight="@drawable/menu_icon_more"
+        openxu:iconRight="@mipmap/menu_icon_more"
         openxu:textcenter="EventBus"/>
     <Button
         android:id="@+id/btn_eventbus1"

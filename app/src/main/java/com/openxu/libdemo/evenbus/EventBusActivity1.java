@@ -1,7 +1,5 @@
 package com.openxu.libdemo.evenbus;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Button;
 
 import com.openxu.libdemo.R;
@@ -14,7 +12,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by openXu on 2017/3/7.
@@ -56,8 +53,8 @@ public class EventBusActivity1 extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        LogUtil.e(this, "收到事件通知了");
-        LogUtil.i(this, event.toString());
+        LogUtil.e(TAG, "收到事件通知了");
+        LogUtil.i(TAG, event.toString());
         ToastAlone.show(event.toString());
     }
 

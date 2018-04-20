@@ -1,0 +1,14 @@
+<resources>
+
+    <!--Android4.4以上的系统会加载此文件中的样式-->
+
+    <!--Android4.4开始，出现新的api能使界面扩展至状态栏（windowTranslucentStatus）&
+                        导航栏（windowTranslucentNavigation），也就是传说的“沉浸式”-->
+
+    <!--  主界面样式：由于首页第四个fragmen上方背景为一个图片（非纯色），所以需要上界面显示到状态栏之上-->
+    <style name="AppTheme" parent="@style/AppBaseTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+    </style>
+
+</resources>

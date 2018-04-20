@@ -41,14 +41,7 @@ public class SpUtil {
 
     private String KEY_TEST = "test";
 
-    public String getTest(){
-        return sp.getString(KEY_TEST,"空的");
-    }
 
 
-
-    public void  setTest(){
-        sp.edit().putString(KEY_TEST,"哈哈哈哈哈哈").commit();
-    }
 
 }

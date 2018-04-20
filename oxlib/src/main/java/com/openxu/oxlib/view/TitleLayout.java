@@ -6,6 +6,8 @@ import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -19,7 +21,6 @@ import android.widget.TextView;
 
 import com.openxu.oxlib.R;
 import com.openxu.oxlib.utils.DensityUtil;
-import com.openxu.oxlib.utils.LogUtil;
 
 
 /**
@@ -28,12 +29,43 @@ import com.openxu.oxlib.utils.LogUtil;
  * className: TitleLayout
  * version:
  * description: 通用的titlebar
+ *
+ * Sample：(属性详情参照attrs.xml-TitleView)
+ <com.fzy.vcm.view.TitleLayout
+ android:layout_width="match_parent"
+ android:layout_height="wrap_content"
+ style="@style/TitleDefStyle"
+ openxu:textLeft="本月任务"
+ openxu:textcenter="center"
+ openxu:textRight="right"
+ openxu:iconLeft="@mipmap/home_nav_icon_task"
+ openxu:iconCenterRow="@android:drawable/arrow_down_float"
+ openxu:iconRight="@mipmap/home_nav_icon_task"/>
+
+ title_Layout.setBackgroundColor1(Color.RED)
+ .setTextLeft("本月任务")
+ .setIconLeft(R.mipmap.home_nav_icon_task)
+ .setIconRight(R.mipmap.home_nav_icon_dot)
+ .show();
+ //事件处理
+ title_Layout.setOnMenuClickListener(menu->{
+ switch (menu){
+ case MENU_BACK:       //返回按钮
+ break;
+ case MENU_LEFT_ICON:  //左侧图标（一般不做处理）
+ break;
+ case MENU_CENTER:     //中间标题点击
+ break;
+ case MENU_RIGHT_ICON: //右侧菜单图标
+ break;
+ }
+ });
  */
 public class TitleLayout extends RelativeLayout {
 
-
     private String TAG = "TitleLayout";
 
+    private View view_tran_bar;             //状态栏预留占位
     /*总容器*/
     private RelativeLayout titleLayout;              //title总布局
     /*左侧部分*/
@@ -45,12 +77,11 @@ public class TitleLayout extends RelativeLayout {
     /*中间*/
     private RelativeLayout rl_center;                //中间容器
     private TextView tv_center_text;                 //中间文字
-    private ImageView iv_center_row;                 //文字点击箭头
     /*右侧*/
-    private LinearLayout ll_right;                 //右侧容器
-    private RelativeLayout rl_right_icon;   //右侧图标（可带气泡）
+    private LinearLayout ll_right;                   //右侧容器
+    private RelativeLayout rl_right_icon;      //右侧图标（可带气泡）
     private TextView tv_right_text, tv_right_pop;                   //右侧文字
-    private ImageView iv_right_icon;    //菜单图标、气泡
+    private ImageView iv_right_icon;           //菜单图标、气泡
     private LinearLayout ll_right_icon_content;       //其他菜单容器
 
     /**
@@ -59,13 +90,13 @@ public class TitleLayout extends RelativeLayout {
     private String textLeft, textcenter, textRight, numRightPop;  //文字
     private int iconBack, iconLeft, iconCenterRow, iconRight;  //图标
 
-    private float titleHeight;                         //文字高度
-    private float textSize;                            //文字大小
-    private int textColor;                             //文字颜色
-    private float textIconSpace;                       //item之间的间距
-    private float leftSpace;                           //标题左侧的空隙
-    private float rightSpace;                          //标题右侧的空隙
-    private float centerRowSpace;                      //中间箭头和文字的距离
+    private float titleHeight;       //文字高度
+    private float textSize;          //文字大小
+    private int textColor;           //文字颜色
+    private float textIconSpace;     //item之间的间距
+    private float leftSpace;         //标题左侧的空隙
+    private float rightSpace;        //标题右侧的空隙
+    private float centerRowSpace;    //中间箭头和文字的距离
 
     private float leftUsed;
     private float rightUsed;
@@ -87,6 +118,11 @@ public class TitleLayout extends RelativeLayout {
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(context).inflate(R.layout.title_layout, this, true);
 
+
+        setBackgroundColor(getResources().getColor(R.color.title_color));
+
+        view_tran_bar = findViewById(R.id.view_tran_bar);
+
         //title总布局
         titleLayout = (RelativeLayout) findViewById(R.id.titleLayout);
         /*左侧部分*/
@@ -98,7 +134,6 @@ public class TitleLayout extends RelativeLayout {
         tv_left_text = (TextView) findViewById(R.id.tv_left_text);
         /*中间*/
         rl_center = (RelativeLayout) findViewById(R.id.rl_center);
-        iv_center_row = (ImageView) findViewById(R.id.iv_center_row);
         tv_center_text = (TextView) findViewById(R.id.tv_center_text);
         /*右侧*/
         ll_right = (LinearLayout) findViewById(R.id.ll_right);
@@ -108,29 +143,30 @@ public class TitleLayout extends RelativeLayout {
         tv_right_pop = (TextView) findViewById(R.id.tv_right_pop);
         ll_right_icon_content = (LinearLayout) findViewById(R.id.ll_right_icon_content);
 
-        //获取自定义属性的值
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TitleView, defStyleAttr, 0);
+        if(attrs!=null){
+            //获取自定义属性的值
+            TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TitleView, defStyleAttr, 0);
 
-        textLeft = ta.getString(R.styleable.TitleView_textLeft);
-        textcenter = ta.getString(R.styleable.TitleView_textcenter);
-        textRight = ta.getString(R.styleable.TitleView_textRight);
-        iconBack = ta.getResourceId(R.styleable.TitleView_iconBack, 0);
-        iconLeft = ta.getResourceId(R.styleable.TitleView_iconLeft, 0);
-        iconCenterRow = ta.getResourceId(R.styleable.TitleView_iconCenterRow, 0);
-        iconRight = ta.getResourceId(R.styleable.TitleView_iconRight, 0);
+            textLeft = ta.getString(R.styleable.TitleView_textLeft);
+            textcenter = ta.getString(R.styleable.TitleView_textcenter);
+            textRight = ta.getString(R.styleable.TitleView_textRight);
+            iconBack = ta.getResourceId(R.styleable.TitleView_iconBack, 0);
+            iconLeft = ta.getResourceId(R.styleable.TitleView_iconLeft, 0);
+            iconCenterRow = ta.getResourceId(R.styleable.TitleView_iconCenterRow, 0);
+            iconRight = ta.getResourceId(R.styleable.TitleView_iconRight, 0);
 
-        textSize = ta.getInteger(R.styleable.TitleView_textSize, 1);
-        titleHeight = ta.getDimension(R.styleable.TitleView_titleHeight, 0);
-        textColor = ta.getColor(R.styleable.TitleView_textColor, Color.WHITE);
-        textIconSpace = ta.getDimension(R.styleable.TitleView_textIconSpace, 0);
-        leftSpace = ta.getDimension(R.styleable.TitleView_leftSpace, 0);
-        rightSpace = ta.getDimension(R.styleable.TitleView_rightSpace, 0);
-        centerRowSpace = ta.getDimension(R.styleable.TitleView_centerRowSpace, 0);
+            textSize = ta.getInteger(R.styleable.TitleView_textSize, 1);
+            titleHeight = ta.getDimension(R.styleable.TitleView_titleHeight, 0);
+            textColor = ta.getColor(R.styleable.TitleView_textColor, Color.WHITE);
+            textIconSpace = ta.getDimension(R.styleable.TitleView_textIconSpace, 0);
+            leftSpace = ta.getDimension(R.styleable.TitleView_leftSpace, 0);
+            rightSpace = ta.getDimension(R.styleable.TitleView_rightSpace, 0);
+            centerRowSpace = ta.getDimension(R.styleable.TitleView_centerRowSpace, 0);
 
 //        LogUtil.i(TAG, "textLeft = "+textLeft);
 //        LogUtil.i(TAG, "textcenter = "+textcenter);
 //        LogUtil.i(TAG, "textRight = "+textRight);
-        LogUtil.i(TAG, "iconBack = " + iconBack);
+//        LogUtil.i(TAG, "iconBack = " + iconBack);
 //        LogUtil.i(TAG, "iconLeft = "+iconLeft);
 //        LogUtil.i(TAG, "iconCenterRow = "+iconCenterRow);
 //        LogUtil.i(TAG, "iconRight = "+iconRight);
@@ -139,14 +175,19 @@ public class TitleLayout extends RelativeLayout {
 //        LogUtil.i(TAG, "titleHeight = "+titleHeight);
 //        LogUtil.i(TAG, "textColor = "+textColor);
 //        LogUtil.i(TAG, "textIconSpace = "+textIconSpace);
-        LogUtil.i(TAG, "leftSpace = " + leftSpace);
+//        LogUtil.i(TAG, "leftSpace = " + leftSpace);
 //        LogUtil.i(TAG, "rightSpace = "+rightSpace);
 //        LogUtil.i(TAG, "centerRowSpace = "+centerRowSpace);
 
-        ta.recycle();
+            ta.recycle();
+        }
+
         show();
     }
 
+    /**
+     * 显示，当设置属性值后，调用此方法
+     */
     public void show() {
         setParams();
         setGone();
@@ -164,6 +205,21 @@ public class TitleLayout extends RelativeLayout {
         textPaint = new Paint();
         textPaint.setTextSize(textSize);
 //        LogUtil.d(TAG, "设置字体");
+
+        //设置状态栏占位高度
+        int barHeight = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            /**由于app的标题栏背景是图片而不是纯色，所以version>4.4的版本都显示在状态栏之上，需要添加一个状态栏高度的占位控件*/
+//            LogUtil.i(TAG, "版本："+Build.VERSION.SDK_INT+" >= "+Build.VERSION_CODES.KITKAT+"，需要显示状态栏占位");
+            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                barHeight = getResources().getDimensionPixelSize(resourceId);
+            }
+        }
+        view_tran_bar.setBackgroundColor(Color.TRANSPARENT);
+        LinearLayout.LayoutParams barparams = (LinearLayout.LayoutParams) view_tran_bar.getLayoutParams();
+        barparams.height = barHeight;
+        view_tran_bar.setLayoutParams(barparams);
 
         //设置标题高度
         ViewGroup.LayoutParams params = titleLayout.getLayoutParams();
@@ -203,7 +259,6 @@ public class TitleLayout extends RelativeLayout {
         ll_left.setVisibility(View.GONE);
 
         tv_center_text.setVisibility(View.GONE);
-        iv_center_row.setVisibility(View.GONE);
         rl_center.setVisibility(View.GONE);
 
         tv_right_text.setVisibility(View.GONE);
@@ -293,11 +348,10 @@ public class TitleLayout extends RelativeLayout {
 
                 if (iconCenterRow != 0) {
 //                    LogUtil.d(TAG, "中间箭头可见");
-                    iv_center_row.setVisibility(View.VISIBLE);
-                    iv_center_row.setImageResource(iconCenterRow);
-                    LayoutParams rl_params = (LayoutParams) iv_center_row.getLayoutParams();
-                    rl_params.leftMargin = (int) centerRowSpace;
-                    iv_center_row.setLayoutParams(rl_params);
+                    Drawable iconCenterDraw = getResources().getDrawable(iconCenterRow);
+                    iconCenterDraw.setBounds(0, 0, iconCenterDraw.getMinimumWidth(), iconCenterDraw.getMinimumHeight());
+                    tv_center_text.setCompoundDrawables(null, null, iconCenterDraw, null);
+                    tv_center_text.setCompoundDrawablePadding((int) centerRowSpace);
                     rl_center.setOnClickListener(v -> {
                         if (listener != null)
                             listener.onClick(MENU_NAME.MENU_CENTER, rl_center);
@@ -408,6 +462,14 @@ public class TitleLayout extends RelativeLayout {
         MENU_RIGHT_TEXT,
     }
 
+    public void setLeftIconVisible(boolean showIcon){
+        if(showIcon){
+            ll_back.setVisibility(VISIBLE);
+        }else{
+            ll_back.setVisibility(GONE);
+        }
+    }
+
     public interface OnMenuClickListener {
         void onClick(MENU_NAME menu, View view);
     }
@@ -422,6 +484,7 @@ public class TitleLayout extends RelativeLayout {
 
     public TitleLayout setBackgroundColor1(int Color) {
         titleLayout.setBackgroundColor(Color);
+        view_tran_bar.setBackgroundColor(Color);
         return this;
     }
 
@@ -461,7 +524,6 @@ public class TitleLayout extends RelativeLayout {
 
     public TitleLayout setIconCenterRow(int iconCenterRow) {
         this.iconCenterRow = iconCenterRow;
-        iv_center_row.setImageResource(iconCenterRow);
         return this;
     }
 

@@ -10,38 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TitleDefStyle"
-        openxu:textcenter="主界面"/>
+        openxu:textcenter="openXu"/>
 
-    <TextView
+    
+    <com.openxu.oxlib.view.chart.dashboard.DashBoardView
+        android:id="@+id/dashBoardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="1.支持lambda语法
-2.butterknife注入框架
-3.gson  "/>
+        android:layout_height="160dp"
+        android:background="#ffffff"
+        android:paddingTop="15dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="10dp"/>
+    
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-    <Button
-        android:id="@+id/btn_eventbus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="EventBus事件发布和订阅"/>
-    <Button
-        android:id="@+id/btn_retrofit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="retrofit"/>
-    <Button
-        android:id="@+id/btn_toast"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Toast"/>
-    <Button
-        android:id="@+id/btn_set"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="set"/>
-    <Button
-        android:id="@+id/btn_serviceoast"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ServiceToast"/>
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

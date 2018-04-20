@@ -8,6 +8,9 @@
     <!-- 允许挂载和反挂载文件系统可移动存储 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!--震动-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -22,10 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".evenbus.EventBusActivity1"/>
-        <activity android:name=".retrofit.test.TestRetrofitActivity"/>
-        <service android:name=".TestService"
-            android:process=":testpro"/>
-
+        <activity android:name=".view.ViewActivityTest"/>
 
     </application>
 

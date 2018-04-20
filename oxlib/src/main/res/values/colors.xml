@@ -154,6 +154,43 @@
     <color name="dark">#ededed</color><!--暗灰色 -->
     <color name="dark_black">#666666</color><!--暗黑色 -->
 
-
+    <!--****↓↓↓↓↓↓↓↓↓↓↓↓app整体颜色规范↓↓↓↓↓↓↓↓↓↓↓↓****-->
+    <!--整个app主色调，用于title_bar等重要的颜色提醒-->
     <color name="title_color">#db4527</color>
+    <!--通用背景色-->
+    <color name="main_style">#f9f9f9</color>
+    <!--白色内容区域按下时的背景色-->
+    <color name="white_press_bg">#16000000</color>
+    <!--线条色-->
+    <color name="line_bg_color">#f9f9f9</color>
+
+    <!--字体颜色-->
+    <color name="text_color_def">#5e5e5e</color>
+    <color name="text_color_light_gray">#939393</color>
+    <color name="text_color_white">#ffffff</color>
+    <color name="edit_hint_color">#999999</color>
+
+    <!--辅助色-->
+    <color name="color_red">#E70012</color>
+    <color name="color_yellow">#fda33c</color>
+    <color name="color_green">#61d007</color>
+    <color name="color_blue">#5f93e7</color>
+    <color name="color_bg_grey">#F2F2F2</color>>
+    <!--****↑↑↑↑↑↑↑↑↑↑↑↑app整体颜色规范↑↑↑↑↑↑↑↑↑↑↑↑****-->
+
+    <!--图表 chart-->
+    <color name="text_color_chart_coordinate">#939393</color>   <!--坐标字体大小-->
+    <color name="text_color_chart_tag">#939393</color>          <!--指标字体大小-->
+    <color name="text_color_chart_lable">#939393</color>        <!--字体大小-->
+
+    <!--股票折线图表文字颜色-->
+    <color name="tc_chart_lable">#939393</color><!--指标文字颜色-->
+    <color name="tc_chart_xy">#939393</color>   <!--xy轴刻度文字颜色-->
+    <color name="tc_chart_time">#5E5E5E</color> <!--时间文字颜色-->
+    <color name="tc_chart_focus_line">#FF4081</color> <!--焦点线颜色-->
+
+
+
+
+
 </resources>

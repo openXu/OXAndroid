@@ -2,104 +2,76 @@ package com.openxu.oxlib.utils;
 
 import android.util.Log;
 
-import com.openxu.oxlib.OXConfig;
+import com.openxu.oxlib.BuildConfig;
+
 
 /**
- * author : openXu
- * create at : 2017/3/6 13:41
- * blog : http://blog.csdn.net/xmxkf
- * gitHub : https://github.com/openXu
- * project : oxlib
- * class name : LogUtil
+ * autour : openXu
+ * date : 2017/11/6 11:36
+ * className : LogUtil
  * version : 1.0
- * class describe：
+ * description : log日志
  */
 public class LogUtil {
-    private static String TAG = "openXu";
 
-    public static void v(String msg) {
-        v(TAG, msg);
+    public static void i(String TAG, Object msg) {
+        logLong("i", TAG, msg);
     }
-    public static void v(String TAG, String msg) {
-        if (OXConfig.DEBUG){
-        	msg=formNull(msg);
-            Log.v(TAG, msg);
-        }
+    public static void d(String TAG, Object msg) {
+        logLong("d", TAG, msg);
     }
-    public static void v(Object TAG, String msg) {
-        if (OXConfig.DEBUG){
-            msg=formNull(msg);
-            Log.v(TAG.getClass().getSimpleName(), msg);
-        }
+    public static void v(String TAG, Object msg) {
+        logLong("v", TAG, msg);
     }
-
-    public static void d(String msg) {
-        d(TAG, msg);
+    public static void w(String TAG, Object msg) {
+        logLong("w", TAG, msg);
     }
-    public static void d(String TAG, String msg) {
-        if (OXConfig.DEBUG){
-            msg=formNull(msg);
-            Log.d(TAG, msg);
-        }
-    }
-    public static void d(Object TAG, String msg) {
-        if (OXConfig.DEBUG){
-            msg=formNull(msg);
-            Log.d(TAG.getClass().getSimpleName(), msg);
-        }
+    public static void e(String TAG, Object msg) {
+        logLong("e", TAG, msg);
     }
 
-    public static void i(String msg) {
-        i(TAG, msg);
-    }
-    public static void i(String TAG, String msg) {
-        if (OXConfig.DEBUG){
-            msg=formNull(msg);
-            Log.i(TAG, msg);
+    /**
+     * 日志太长打印不全时，分段打印
+     * @param type
+     * @param tag
+     * @param msg
+     */
+    private static void logLong(String type, String tag, Object msg) {
+        String content = (null==msg)?"":msg.toString();
+        int maxLength = 1000;
+        long length = content.length();
+        if (length <= maxLength) {
+            logByType(type, tag, content);
+        }else {
+            while (content.length() > maxLength) {
+                String logContent = content.substring(0, maxLength);
+                content = content.replace(logContent, "");
+                logByType(type, tag, logContent);
+            }
+            logByType(type, tag, content);
         }
     }
-    public static void i(Object TAG, String msg) {
-        if (OXConfig.DEBUG){
-            msg=formNull(msg);
-            Log.i(TAG.getClass().getSimpleName(), msg);
-        }
-    }
-
-    public static void w(String msg) {
-        w(TAG, msg);
-    }
-    public static void w(String TAG, String msg) {
-        if (OXConfig.DEBUG){
-            msg=formNull(msg);
-            Log.w(TAG, msg);
-        }
-    }
-    public static void w(Object TAG, String msg) {
-        if (OXConfig.DEBUG){
-            msg=formNull(msg);
-            Log.w(TAG.getClass().getSimpleName(), msg);
+    /**打印不同颜色日志*/
+    private static void logByType(String type, String tag, String content){
+        if(BuildConfig.LOG_DEBUG) {
+            switch (type){
+                case "i":
+                    Log.i(tag, ""+(null==content?"":content));
+                    break;
+                case "d":
+                    Log.d(tag, ""+(null==content?"":content));
+                    break;
+                case "v":
+                    Log.v(tag, ""+(null==content?"":content));
+                    break;
+                case "w":
+                    Log.w(tag, ""+(null==content?"":content));
+                    break;
+                case "e":
+                    Log.e(tag, ""+(null==content?"":content));
+                    break;
+            }
         }
     }
 
-    public static void e(String msg) {
-        e(TAG, msg);
-    }
-    public static void e(String TAG, String msg) {
-        if (OXConfig.DEBUG){
-            msg=formNull(msg);
-            Log.e(TAG, msg);
-        }
-    }
-    public static void e(Object TAG, String msg) {
-        if (OXConfig.DEBUG){
-            msg=formNull(msg);
-            Log.e(TAG.getClass().getSimpleName(), msg);
-        }
-    }
-
-
-    //对null值进行替换
-    private static String formNull(String value){
-    	return value==null ?"null":value;
-    }
 }

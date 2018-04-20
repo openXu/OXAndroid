@@ -1,23 +1,19 @@
 ext {
 
     android = [
-
             javaVersion : JavaVersion.VERSION_1_8,
-
             compileSdkVersion: 25,
-            buildToolsVersion: "25.0.1",
-
-            minSdkVersion    :  15,
+            buildToolsVersion: "26.0.2",
+            minSdkVersion    :  14,
             targetSdkVersion : 25,
-
             versionCode      : 1,
             versionName      : '1.0.0',
-
-            VSupportSdk      : '25.0.1'
+            VSupportSdk      : '25.3.1'
     ]
 
     dependencies = [
             "appcompat-v7"   : "com.android.support:appcompat-v7:${android["VSupportSdk"]}",
+            "recyclerview-v7"   : "com.android.support:recyclerview-v7:${android["VSupportSdk"]}",
             "design"         : "com.android.support:design:${android["VSupportSdk"]}",
             //View注入框架
             "butterknife"    : "com.jakewharton:butterknife:8.5.1",
@@ -29,8 +25,29 @@ ext {
             "okhttp"       : "com.zhy:okhttputils:2.5.2",
 
             "retrofit"    :"com.squareup.retrofit2:retrofit:2.2.0"
-
-
-
     ]
+
+    appconfig = [
+            applicationId : "com.taros.wrist",
+            /*app版本*/
+            versionCode      : 1,
+            versionName      : '1.0.0',
+            appName : "\"蓝牙手环\"",
+            /*app存储文件夹名*/
+            APP_FILE_NAME  : "\"tarosWrist\"",
+            /*兼容android7.0传递URI主机，通常位app的包名+.fileprovider*/
+            AUTHORITIES  : "\"com.taros.wrist.fileprovider\"",
+            /*默认服务器端口*/
+            DEFAULT_PORT  : "58001",
+            DEFAULT_ADDRESS_DEBUG  : "\"114.115.144.251\"",
+            DEFAULT_ADDRESS_RELEASE  : "\"114.115.144.251\"",
+    ]
+
+    greendao = [
+            dbName       : "\"wrist.db\"",//数据库名称
+            schemaVersion : 1,//数据库版本号
+            daoPackage : 'com.taros.wrist.db.dao',//设置DaoMaster、DaoSession、Dao包名
+            targetGenDir : 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+    ]
+
 }

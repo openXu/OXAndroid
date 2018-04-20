@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -14,25 +13,47 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "String", "appName", rootProject.ext.appconfig.appName
+            buildConfigField "String", "APP_FILE_NAME", rootProject.ext.appconfig.APP_FILE_NAME
+            buildConfigField "String", "AUTHORITIES", rootProject.ext.appconfig.AUTHORITIES
+            buildConfigField "int", "DEFAULT_PORT", rootProject.ext.appconfig.DEFAULT_PORT
+            buildConfigField "String", "DEFAULT_ADDRESS", rootProject.ext.appconfig.DEFAULT_ADDRESS_RELEASE
+            buildConfigField "String", "dbName", rootProject.ext.greendao.dbName        //数据库名称
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "appName", rootProject.ext.appconfig.appName
+            buildConfigField "String", "APP_FILE_NAME", rootProject.ext.appconfig.APP_FILE_NAME
+            buildConfigField "String", "AUTHORITIES", rootProject.ext.appconfig.AUTHORITIES
+            buildConfigField "int", "DEFAULT_PORT", rootProject.ext.appconfig.DEFAULT_PORT
+            buildConfigField "String", "DEFAULT_ADDRESS", rootProject.ext.appconfig.DEFAULT_ADDRESS_DEBUG
+            buildConfigField "String", "dbName", rootProject.ext.greendao.dbName
         }
     }
 }
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["design"]
-    compile rootProject.ext.dependencies["butterknife"]
-    compile rootProject.ext.dependencies["butterknife-apt"]
-    compile rootProject.ext.dependencies["gson"]
-    compile rootProject.ext.dependencies["eventbus"]
-    compile rootProject.ext.dependencies["okhttp"]
-    compile rootProject.ext.dependencies["retrofit"]
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation rootProject.ext.dependencies['recyclerview-v7']
+    implementation rootProject.ext.dependencies["butterknife"]
+    implementation rootProject.ext.dependencies["butterknife-apt"]
+    implementation rootProject.ext.dependencies["eventbus"]
 }

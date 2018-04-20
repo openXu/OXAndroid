@@ -14,10 +14,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import com.openxu.oxlib.R;
+import com.openxu.oxlib.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 /**
  * autour: openXu
@@ -42,24 +44,30 @@ public class PermissionUtils {
 
     public static final int PERMISSION_SETTING_REQ_CODE = 0x00c8;
 
-    /*权限类型，如果需要的权限未在内，请在此添加*/
+
+    /**
+     * 需要申请的权限
+     */
     public static final String[] PERMISSION = new String[]{
+            Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE, // 写入权限
             Manifest.permission.READ_EXTERNAL_STORAGE,  //读取权限
             Manifest.permission.CAMERA, //摄像头
-            Manifest.permission.RECORD_AUDIO, //录音
-            Manifest.permission.NFC           //NFC
+            Manifest.permission.ACCESS_COARSE_LOCATION, //定位
+            Manifest.permission.ACCESS_FINE_LOCATION, //定位
+            Manifest.permission.RECORD_AUDIO //录音
     };
+
     /*权限名称，当权限被拒绝时，用于提醒用户开启权限（此数组应与上面权限数组一一对应）*/
     public static final String[] PERMISSION_NAME = new String[]{
+            "读取手机状态",
             "写入手机存储权限",
             "读取手机存储权限",
             "摄像头权限",
+            "获取手机粗略位置",
+            "获取精确位置权限",
             "录音权限",
-            "NFC权限"
     };
-
-
 
     /**检测某项权限*/
     @TargetApi(23)
@@ -128,7 +136,7 @@ public class PermissionUtils {
             LogUtil.e(TAG, "申请权限");
             return false;
         } else {
-            LogUtil.i(TAG, "没有未通过的权限");
+//            LogUtil.i(TAG, "没有未通过的权限");
             return true;
         }
     }
@@ -218,7 +226,7 @@ public class PermissionUtils {
                 LogUtil.e(TAG, p+ "未通过");
                 permiList.add(p);
             }else{
-                LogUtil.i(TAG, p+ "已通过");
+//                LogUtil.i(TAG, p+ "已通过");
             }
         }
         return permiList.toArray(new String[permiList.size()]);
@@ -361,8 +369,8 @@ public class PermissionUtils {
     }
 
     /**弹出设置权限对话框*/
-    private static void gotoSetting(Activity activity, String permissionName, String use){
-        String msg = "在设置-应用-"+activity.getResources().getString(R.string.app_name)+
+    private static void gotoSetting(final Activity activity, String permissionName, String use){
+        String msg = "在设置-应用-"+ BuildConfig.appName+
                 "-权限中开启"+permissionName+"权限，以正常使用"+use+"功能";
         new AlertDialog.Builder(activity)
                 .setTitle("权限申请")

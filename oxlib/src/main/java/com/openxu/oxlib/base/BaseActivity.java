@@ -1,19 +1,14 @@
 package com.openxu.oxlib.base;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.openxu.oxlib.R;
 import com.openxu.oxlib.utils.LogUtil;
@@ -45,6 +40,7 @@ import butterknife.Unbinder;
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected String TAG = "BaseActivity";
+    protected Context mContext;
 
     protected Unbinder unbinder;
     protected TitleLayout titleLayout;
@@ -66,12 +62,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setCxs();
         super.onCreate(savedInstanceState);
         setContentView(getLayoutID());
-
+        mContext = this;
         View titleView = findViewById(R.id.title_layout);
-        titleLayout = titleView==null?null:(TitleLayout)titleView;
+
+        if (null != titleView) {
+            titleLayout = (TitleLayout)titleView;
+            titleLayout.setBackgroundColor1(getResources().getColor(R.color.title_color));
+            //默认处理返回键
+            titleLayout.setOnMenuClickListener((menu, view)-> {
+                switch (menu) {
+                    case MENU_BACK:
+                        onBackPressed();
+                        return;
+                }
+                onMenuClick(menu, view);
+            });
+        }
+
 
         unbinder = ButterKnife.bind(this);
         initView();
@@ -81,28 +90,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayoutID();
     protected abstract void initView();
+    protected void onMenuClick(TitleLayout.MENU_NAME menu, View view) {
+
+    }
     protected void setListener(){}
     protected abstract void initData();
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void setCxs(){
-        getWindow().setStatusBarColor(getResources().getColor(R.color.title_color));
-        Window window = getWindow();
-        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        //设置状态栏颜色
-//        window.setStatusBarColor(getResources().getColor(R.color.main_style));
-
-        ViewGroup mContentView = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
-        View mChildView = mContentView.getChildAt(0);
-        if (mChildView != null) {
-            //注意不是设置 ContentView 的 FitsSystemWindows, 而是设置 ContentView 的第一个子 View . 预留出系统 View 的空间.
-            ViewCompat.setFitsSystemWindows(mChildView, true);
-        }
-    }
 
     @Override
     public void onStart() {

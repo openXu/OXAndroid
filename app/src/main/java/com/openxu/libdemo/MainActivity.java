@@ -1,46 +1,39 @@
 package com.openxu.libdemo;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.widget.Button;
-import android.widget.TextView;
+import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 
 import com.openxu.libdemo.evenbus.EventBusActivity1;
 import com.openxu.libdemo.evenbus.MessageEvent;
-import com.openxu.libdemo.retrofit.test.TestRetrofitActivity;
+import com.openxu.oxlib.adapter.CommandRecyclerAdapter;
+import com.openxu.oxlib.adapter.ViewHolder;
 import com.openxu.oxlib.base.BaseActivity;
 import com.openxu.oxlib.utils.LogUtil;
 import com.openxu.oxlib.utils.ToastAlone;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
+import com.openxu.oxlib.view.chart.dashboard.DashBoardItem;
+import com.openxu.oxlib.view.chart.dashboard.DashBoardView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Request;
 
 public class MainActivity extends BaseActivity {
 
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-    @BindView(R.id.btn_eventbus)
-    Button btn_eventbus;
+    @BindView(R.id.dashBoardView)
+    DashBoardView dashBoardView;
 
-    @BindView(R.id.btn_retrofit)
-    Button btn_retrofit;
-    @BindView(R.id.btn_toast)
-    Button btn_toast;
-    @BindView(R.id.btn_set)
-    Button btn_set;
-    @BindView(R.id.btn_serviceoast)
-    Button btn_serviceoast;
+
+    private List<String> itemList;
 
     @Override
     protected int getLayoutID() {
@@ -50,36 +43,54 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
 
+        itemList = new ArrayList<>();
+        itemList.add("自定义控件");
+        itemList.add("EventBus事件发布和订阅");
+        itemList.add("retrofit");
+
+        CommandRecyclerAdapter adapter = new CommandRecyclerAdapter<String>(this,
+                R.layout.item_recycler, itemList){
+            @Override
+            public void convert(ViewHolder holder, String str) {
+                holder.setText(R.id.tv_name, str);
+            }
+
+            @Override
+            public void onItemClick(String data, int position) {
+                Intent intent = null;
+                switch (position){
+                    case 0:
+                        intent = new Intent(mContext, EventBusActivity1.class);
+                        break;
+                    case 1:
+                        intent = new Intent(mContext, EventBusActivity1.class);
+                        break;
+                }
+                if(null!=intent)
+                    startActivity(intent);
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.setData(itemList);
     }
 
     @Override
     protected void setListener() {
-        //lambda表达式
-        btn_eventbus.setOnClickListener(v->{
-            startActivity(new Intent(this, EventBusActivity1.class));
-        });
-        btn_retrofit.setOnClickListener(v->{
-            startActivity(new Intent(this, TestRetrofitActivity.class));
-        });
-        btn_toast.setOnClickListener(v->{
-            ToastAlone.show(SpUtil.getInstance(this).getTest());
-        });
-        btn_set.setOnClickListener(v->{
-            SpUtil.getInstance(this).setTest();
-        });
-        btn_serviceoast.setOnClickListener(v->{
-           startService(new Intent(this, TestService.class));
-        });
+        dashBoardView.setLoading(false);
+        List<DashBoardItem> dataList = new ArrayList<>();
+        dataList.add(new DashBoardItem(Color.GRAY, "普通", 30));
+        dataList.add(new DashBoardItem(Color.BLUE, "严重", 40));
+        dataList.add(new DashBoardItem(Color.BLACK, "超标", 30));
+        dashBoardView.setData(dataList);
+        dashBoardView.setPro(50);
 
     }
-
-
 
     @Override
     protected void initData() {
         Map<String, String> params = new HashMap<>();
         params.put("OrganiseUnitID", "20e1516b-2032-11e7-98bc-000c29624c55");
-        OkHttpUtils.post()
+       /* OkHttpUtils.post()
                 .url("http://172.16.160.34:8002/WebApi/DataExchange/SendData/SHOP_Register_Cancel?datakey=00-00-00-00")
                 .params(params)
                 .build()
@@ -104,14 +115,14 @@ public class MainActivity extends BaseActivity {
                         super.onAfter();
                     }
                 });
-
+*/
 
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        LogUtil.e(this, "收到事件通知了");
-        LogUtil.i(this, event.toString());
+        LogUtil.e(TAG, "收到事件通知了");
+        LogUtil.i(TAG, event.toString());
         ToastAlone.show(event.toString());
     }
 
