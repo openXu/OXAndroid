@@ -96,6 +96,7 @@ public class DashBoardView extends BaseChart {
         calculatData();
     }
     private float progress;
+    private float progressAnim;
     public void setPro(float progress){
         this.progress = progress;
         invalidate();
@@ -225,13 +226,10 @@ public class DashBoardView extends BaseChart {
         paint.setColor(Color.BLACK);
         canvas.drawCircle(arcCenter.x, arcCenter.y, centerPointSize, paint);
         /*画一个实心三角形*/
-        float proAndle =  (endAngle - startAngle) * (progress/total*1.0f);
-        float pointStartX = (float) (arcRaidus* Math.cos(Math.toRadians(startAngle)));
-        float pointStartY = (float) (arcRaidus* Math.sin(Math.toRadians(startAngle)));
-        LogUtil.i(TAG, "开始幅度坐标"+pointStartX+","+pointStartY);
-        LogUtil.i(TAG, "开始幅度坐标1"+rectChart.left+","+arcCenter.y);
-        float endx = (float) (arcRaidus* Math.cos(Math.toRadians(startAngle+proAndle)));
-        float endy = (float) (arcRaidus* Math.sin(Math.toRadians(startAngle+proAndle)));
+        float proAndle =  (endAngle - startAngle) * (progressAnim/total*1.0f);
+        //以正东面为0度起点计算指定角度所对应的圆周上的点的坐标：
+        float endx = arcCenter.x + (float) (arcRaidus* Math.cos(Math.toRadians(startAngle+proAndle)));
+        float endy = arcCenter.y + (float) (arcRaidus* Math.sin(Math.toRadians(startAngle+proAndle)));
 
         Path path2=new Path();
         path2.moveTo(arcCenter.x-centerPointSize,arcCenter.y);
@@ -260,7 +258,7 @@ public class DashBoardView extends BaseChart {
 
     /**计算各种绘制坐标*/
     private void evaluatorData(float animPre){
-
+        progressAnim = animPre*progress;
     }
 
 

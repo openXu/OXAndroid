@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity {
         dataList.add(new DashBoardItem(Color.BLUE, "严重", 40));
         dataList.add(new DashBoardItem(Color.BLACK, "超标", 30));
         dashBoardView.setData(dataList);
-        dashBoardView.setPro(50);
+        dashBoardView.setPro(70);
 
     }
 
