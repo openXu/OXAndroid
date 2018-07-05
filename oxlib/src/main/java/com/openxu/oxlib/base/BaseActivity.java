@@ -15,13 +15,8 @@ import com.openxu.oxlib.utils.LogUtil;
 import com.openxu.oxlib.utils.PermissionUtils;
 import com.openxu.oxlib.view.TitleLayout;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * author : openXu
@@ -42,7 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected String TAG = "BaseActivity";
     protected Context mContext;
 
-    protected Unbinder unbinder;
+//    protected Unbinder unbinder;
     protected TitleLayout titleLayout;
 
 
@@ -82,7 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
 
-        unbinder = ButterKnife.bind(this);
+//        unbinder = ButterKnife.bind(this);
         initView();
         setListener();
         initData();
@@ -101,7 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         checkCameraPermission();
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
     }
 
 
@@ -165,12 +160,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 
     @Override
     protected void onDestroy() {
-        unbinder.unbind();
+//        unbinder.unbind();
         super.onDestroy();
     }
 }
