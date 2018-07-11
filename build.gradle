@@ -2,13 +2,14 @@
 apply from: "conf.gradle"
 
 buildscript {
-    //支持java 依赖库管理（maven/ivy）,用于项目的依赖
     repositories {
         jcenter()
-        //从中央库里面获取依赖
         mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
-    //依赖包的定义。支持maven/ivy，远程，本地库，也支持单文件
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
@@ -30,6 +31,7 @@ tasks.withType(Javadoc) {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 
