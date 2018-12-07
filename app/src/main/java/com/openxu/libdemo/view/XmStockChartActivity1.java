@@ -55,13 +55,17 @@ public class XmStockChartActivity1 extends AppCompatActivity {
                 LogUtil.i(TAG, "开始录音");
             }
             @Override
-            public void stop() {
-                LogUtil.i(TAG, "结束录音");
+            public void stop(boolean isCancel) {
+                if(isCancel){
+                    LogUtil.i(TAG, "向上滑， 取消录音");
+                }else{
+                    LogUtil.i(TAG, "结束录音");
+                }
             }
             @Override
             public void progress(int time) {
                 LogUtil.i(TAG, "录音时长"+time+"ms");
-                if(time > 5000){  //最长录制5s
+                if(time > 20000){  //最长录制5s
                     speekBtn.stop();
                 }
             }

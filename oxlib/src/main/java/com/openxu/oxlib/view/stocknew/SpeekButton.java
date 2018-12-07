@@ -64,13 +64,9 @@ public class SpeekButton  extends View {
 
     /**结束录音*/
     public void stop(){
-        onTouched = false;
-        if(animSet!=null)
-            animSet.cancel();
-        if(listener!=null)
-            listener.stop();
-        invalidate();
+        stopSpeek(false);
     }
+
 
     private Listener listener;
     public void setListener(Listener listener){
@@ -78,7 +74,7 @@ public class SpeekButton  extends View {
     }
     public interface Listener{
         public void start();
-        public void stop();
+        public void stop(boolean isCancel);
         public void progress(int time);
     }
 
@@ -98,13 +94,18 @@ public class SpeekButton  extends View {
         return super.dispatchTouchEvent(event);
     }
 
+    private class BeCancel{
+        boolean cancel;
+    }
+
+    private BeCancel cancel = new BeCancel();
     private boolean onTouched = false;
     private long startTime;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                if(inCircle(event.getX(), event.getY())){
+                if(inCircle(event.getX(), event.getY(), cancel)){
                     onTouched = true;
                     startTime = System.currentTimeMillis();
                     if(listener!=null)
@@ -113,19 +114,19 @@ public class SpeekButton  extends View {
                 }
                 return true;
             case MotionEvent.ACTION_MOVE:
-                if(!inCircle(event.getX(), event.getY()) && onTouched)
-                    stop();
+                if(!inCircle(event.getX(), event.getY(), cancel) && onTouched)
+                    stopSpeek(cancel.cancel);
                 return true;
             case MotionEvent.ACTION_UP:
                 if(onTouched)
-                    stop();
+                    stopSpeek(cancel.cancel);
                 return true;
         }
         return true;
     }
 
     /**判断手指是否在圆环内*/
-    private boolean inCircle(float x, float y){
+    private boolean inCircle(float x, float y, BeCancel cancel){
         //点击位置x坐标与圆心的x坐标的距离
         int distanceX = (int)Math.abs(x - btnRadius);
         //点击位置y坐标与圆心的y坐标的距离
@@ -133,6 +134,7 @@ public class SpeekButton  extends View {
         //点击位置与圆心的直线距离
         int distance = (int) Math.sqrt(Math.pow(distanceX,2)+Math.pow(distanceY,2));
 //        LogUtil.w(TAG, "距离distance："+distance+"   半径："+radius);
+        cancel.cancel = y < btnRadius;
         //如果点击位置与圆心的距离大于圆的半径，证明点击位置没有在圆内
         return distance<=radius;
     }
@@ -317,6 +319,13 @@ public class SpeekButton  extends View {
         animSet.start();
     }
 
-
+    private void stopSpeek(boolean isCancel){
+        onTouched = false;
+        if(animSet!=null)
+            animSet.cancel();
+        if(listener!=null)
+            listener.stop(isCancel);
+        invalidate();
+    }
 
 }
