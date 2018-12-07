@@ -21,6 +21,11 @@ import com.openxu.oxlib.utils.FontUtil;
 import com.openxu.oxlib.utils.LogUtil;
 import com.openxu.oxlib.view.chart.anim.AngleEvaluator;
 
+import static com.openxu.oxlib.view.chart.BaseChart.TOUCH_EVENT_TYPE.EVENT_NULL;
+import static com.openxu.oxlib.view.chart.BaseChart.TOUCH_EVENT_TYPE.EVENT_X;
+import static com.openxu.oxlib.view.chart.BaseChart.TOUCH_EVENT_TYPE.EVENT_XY;
+import static com.openxu.oxlib.view.chart.BaseChart.TOUCH_EVENT_TYPE.EVENT_Y;
+
 
 /**
  * autour : openXu
@@ -58,7 +63,9 @@ public abstract class BaseChart extends View {
 
     /**正在加载*/
     protected boolean isLoading = true;
-    protected boolean debug = BuildConfig.LOG_DEBUG;
+    protected boolean drawLine = true;
+    protected boolean drawBottomLine = true;
+    protected boolean debug = BuildConfig.DEBUG;
 
 
     /**手指抬起后，动画*/
@@ -133,7 +140,7 @@ public abstract class BaseChart extends View {
     }
 
 
-    protected TOUCH_EVENT_TYPE touchEventType = TOUCH_EVENT_TYPE.EVENT_NULL;
+    protected TOUCH_EVENT_TYPE touchEventType = EVENT_NULL;
     /**需要拦截的事件方向*/
     public enum TOUCH_EVENT_TYPE{
         EVENT_NULL,  /*不处理事件*/
@@ -153,9 +160,9 @@ public abstract class BaseChart extends View {
         LogUtil.d(TAG, "dispatchTouchEvent  "+touchEventType);
         if(!touchEnable){
             LogUtil.w(TAG, "没超界");
-        }else if(TOUCH_EVENT_TYPE.EVENT_NULL == touchEventType){
+        }else if(EVENT_NULL == touchEventType){
             LogUtil.w(TAG, "不需要处理事件");
-        }else if(TOUCH_EVENT_TYPE.EVENT_XY == touchEventType){
+        }else if(EVENT_XY == touchEventType){
             LogUtil.w(TAG, "需要拦截XY方向的事件");
             getParent().requestDisallowInterceptTouchEvent(true);
         }else{
@@ -168,8 +175,8 @@ public abstract class BaseChart extends View {
                     getParent().requestDisallowInterceptTouchEvent(true);//ACTION_DOWN的时候，赶紧把事件hold住
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    if(TOUCH_EVENT_TYPE.EVENT_X == touchEventType){
-                        if(Math.abs(event.getY()-mDownY)>Math.abs(event.getX() - mDownX)) {
+                    if(EVENT_X == touchEventType){
+                        if(Math.abs(event.getY()-mDownY)> Math.abs(event.getX() - mDownX)) {
                             getParent().requestDisallowInterceptTouchEvent(false);
                             LogUtil.i(TAG, "竖直滑动的距离大于水平的时候，将事件还给父控件");
                         }else {
@@ -177,8 +184,8 @@ public abstract class BaseChart extends View {
                             LogUtil.i(TAG, "正常请求事件");
                             dispatchTouchEvent1(event);
                         }
-                    }else if(TOUCH_EVENT_TYPE.EVENT_Y == touchEventType){
-                        if(Math.abs(event.getX() - mDownX)>Math.abs(event.getY()-mDownY)) {
+                    }else if(EVENT_Y == touchEventType){
+                        if(Math.abs(event.getX() - mDownX)> Math.abs(event.getY()-mDownY)) {
                             getParent().requestDisallowInterceptTouchEvent(false);
                             LogUtil.i(TAG, "水平滑动的距离大于竖直的时候，将事件还给父控件");
                         }else {
@@ -213,9 +220,9 @@ public abstract class BaseChart extends View {
                 return true;
             case MotionEvent.ACTION_MOVE:
                 int move = 0;
-                if(TOUCH_EVENT_TYPE.EVENT_X == touchEventType){
+                if(EVENT_X == touchEventType){
                     move = (int)(event.getX() - lastTouchPoint.x);
-                }else if(TOUCH_EVENT_TYPE.EVENT_Y == touchEventType){
+                }else if(EVENT_Y == touchEventType){
                     move = (int)(event.getY() - lastTouchPoint.y);
                 }
                 LogUtil.i(TAG, "MotionEvent.ACTION_MOVE"+move);
@@ -249,7 +256,6 @@ public abstract class BaseChart extends View {
             drawLoading(canvas);
             return;
         }
-        LogUtil.i(TAG, "绘制"+startDraw);
         if(!startDraw){
             startDraw = true;
             startAnimation(canvas);
@@ -257,6 +263,8 @@ public abstract class BaseChart extends View {
             drawChart(canvas);
         }
     }
+
+
 
     public void drawLoading(Canvas canvas) {
         paintLabel.setTextSize(35);
@@ -295,6 +303,7 @@ public abstract class BaseChart extends View {
         if(anim!=null){
             anim.cancel();
         }
+        LogUtil.w(TAG, "开始绘制动画");
         anim = initAnim();
         if(anim==null){
             drawChart(canvas);
@@ -313,6 +322,7 @@ public abstract class BaseChart extends View {
     /**动画值变化之后计算数据*/
     protected void evaluatorFling(float velocityAnim){}
     protected int mMoveLen = 0;       //滚动距离
+    protected boolean moveOver = false; //是否滚动到头了
     /**手指松开后滑动动画效果*/
     protected void startFlingAnimation(float velocity) {
         if(touchAnim!=null){
@@ -334,9 +344,9 @@ public abstract class BaseChart extends View {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             LogUtil.e(TAG,"onFling------------>velocityX="+velocityX+"    velocityY="+velocityY);
-            if(TOUCH_EVENT_TYPE.EVENT_X == touchEventType){
+            if(EVENT_X == touchEventType){
                 startFlingAnimation(velocityX);
-            }else if(TOUCH_EVENT_TYPE.EVENT_Y == touchEventType){
+            }else if(EVENT_Y == touchEventType){
                 startFlingAnimation(velocityY);
             }
             return false;

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class RoseChartBean {
 
-    private int per;
+    private float per;
     private String name;
     //触摸相关
     private Region region;     //扇形区域--用于判断手指触摸点是否在此范围
@@ -43,7 +43,7 @@ public class RoseChartBean {
                 '}';
     }
 
-    public RoseChartBean(int per, String name) {
+    public RoseChartBean(float per, String name) {
         this.per = per;
         this.name = name;
     }
@@ -144,11 +144,11 @@ public class RoseChartBean {
         this.region = region;
     }
 
-    public int getPer() {
+    public float getPer() {
         return per;
     }
 
-    public void setPer(int per) {
+    public void setPer(float per) {
         this.per = per;
     }
 

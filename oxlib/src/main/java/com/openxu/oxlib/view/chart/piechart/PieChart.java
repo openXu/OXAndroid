@@ -263,9 +263,12 @@ public class PieChart extends BaseChart {
         }
 
         //绘制中心内圆
-        paint.setColor(backColor);
-        paint.setStyle(Paint.Style.FILL);//设置实心
-        canvas.drawCircle(centerPoint.x, centerPoint.y, chartRaidus-ringWidth, paint);
+        if(ringWidth>0){
+            paint.setColor(backColor);
+            paint.setStyle(Paint.Style.FILL);//设置实心
+            canvas.drawCircle(centerPoint.x, centerPoint.y, chartRaidus-ringWidth, paint);
+        }
+
 
         /**4 绘制中间文字*/
         if(ringWidth>0 && lableList!=null &&lableList.size()>0){

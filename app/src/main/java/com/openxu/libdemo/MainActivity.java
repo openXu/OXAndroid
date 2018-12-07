@@ -2,10 +2,12 @@ package com.openxu.libdemo;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.openxu.libdemo.evenbus.EventBusActivity1;
 import com.openxu.libdemo.evenbus.MessageEvent;
+import com.openxu.libdemo.view.ViewListActivity;
 import com.openxu.oxlib.adapter.CommandRecyclerAdapter;
 import com.openxu.oxlib.adapter.ViewHolder;
 import com.openxu.oxlib.base.BaseActivity;
@@ -21,17 +23,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
-    @BindView(R.id.dashBoardView)
-    DashBoardView dashBoardView;
-
 
     private List<String> itemList;
 
@@ -60,7 +57,7 @@ public class MainActivity extends BaseActivity {
                 Intent intent = null;
                 switch (position){
                     case 0:
-                        intent = new Intent(mContext, EventBusActivity1.class);
+                        intent = new Intent(mContext, ViewListActivity.class);
                         break;
                     case 1:
                         intent = new Intent(mContext, EventBusActivity1.class);
@@ -70,19 +67,13 @@ public class MainActivity extends BaseActivity {
                     startActivity(intent);
             }
         };
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         adapter.setData(itemList);
     }
 
     @Override
     protected void setListener() {
-        dashBoardView.setLoading(false);
-        List<DashBoardItem> dataList = new ArrayList<>();
-        dataList.add(new DashBoardItem(Color.GRAY, "普通", 30));
-        dataList.add(new DashBoardItem(Color.BLUE, "严重", 40));
-        dataList.add(new DashBoardItem(Color.BLACK, "超标", 30));
-        dashBoardView.setData(dataList);
-        dashBoardView.setPro(70);
 
     }
 

@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.openxu.oxlib.R;
 import com.openxu.oxlib.utils.DensityUtil;
 import com.openxu.oxlib.utils.FontUtil;
 import com.openxu.oxlib.utils.LogUtil;
@@ -21,8 +20,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.openxu.oxlib.view.chart.BaseChart.TOUCH_EVENT_TYPE.EVENT_Y;
 import static com.openxu.oxlib.view.chart.piechart.PieChartLayout.TAG_MODUL.MODUL_LABLE;
-
 
 /**
  * autour : openXu
@@ -48,7 +47,7 @@ public class PieChartLableView extends BaseChart {
     private int rectRaidus;     //矩形圆角
     private int rectSpace;   //右侧标签上下间距
     private int leftSpace;
-    private int textSize = (int)getResources().getDimension(R.dimen.text_size_chart_tag);;  //文字大小
+    private int textSize = 90;  //文字大小
     private int textColor;
     private int arrColorRgb[][];
 
@@ -67,7 +66,7 @@ public class PieChartLableView extends BaseChart {
 
     @Override
     public void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        touchEventType = TOUCH_EVENT_TYPE.EVENT_Y;
+        touchEventType = EVENT_Y;
         dataList = new ArrayList<>();
         setClickable(true);
     }

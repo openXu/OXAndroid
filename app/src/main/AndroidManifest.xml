@@ -25,7 +25,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".evenbus.EventBusActivity1"/>
-        <activity android:name=".view.ViewActivityTest"/>
+        <activity android:name=".view.ViewListActivity"/>
+        <activity android:name=".view.HorizontalBarActivity"/>
+        <activity android:name=".view.PieActivity"/>
+        <activity android:name=".view.ProgressPieActivity"/>
+        <activity android:name=".view.RoseActivity"/>
+        <activity android:name=".view.VerticalBarActivity"/>
+        <activity android:name=".view.XmStockChartActivity"/>
+        <activity android:name=".view.XmStockChartActivity1"/>
 
     </application>
 

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class PieChartBean {
 
-    private int num;
+    private float num;
     private String name;
 
     //触摸相关
@@ -45,7 +45,7 @@ public class PieChartBean {
                 '}';
     }
 
-    public PieChartBean(int num, String name) {
+    public PieChartBean(float num, String name) {
         this.num = num;
         this.name = name;
     }
@@ -115,11 +115,11 @@ public class PieChartBean {
         this.region = region;
     }
 
-    public int getNum() {
+    public float getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(float num) {
         this.num = num;
     }
 

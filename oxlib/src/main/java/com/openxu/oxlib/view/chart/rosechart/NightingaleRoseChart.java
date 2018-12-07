@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+
 import com.openxu.oxlib.R;
 import com.openxu.oxlib.utils.DensityUtil;
 import com.openxu.oxlib.utils.FontUtil;
@@ -59,12 +60,12 @@ public class NightingaleRoseChart extends View {
     private int rightRectSpace = DensityUtil.dip2px(getContext(), 8);   //右侧标签上下间距
     private int textSpace = DensityUtil.dip2px(getContext(), 5);
 
-    private int lableTextSize = 30;   //右侧标注字体大小
-    private int tagTextSize = 25;
+    private int lableTextSize = (int)getResources().getDimension(R.dimen.text_size_level_mid);   //右侧标注字体大小
+    private int tagTextSize = (int)getResources().getDimension(R.dimen.text_size_level_small);
 
-    private String nullStr = "无数据";
+    private String nullStr = "暂无数据";
     private List<RoseChartBean> dataList;
-    private int max;
+    private float max;
 
     private Paint paintArc , paintSelected;
     private Paint paintLabel;
@@ -180,7 +181,7 @@ public class NightingaleRoseChart extends View {
                 filedName.setAccessible(true);
                 for(Object obj : dataList){
                     String perStr = filedPer.get(obj).toString();
-                    this.dataList.add(new RoseChartBean(Integer.parseInt(perStr), (String)filedName.get(obj) ));
+                    this.dataList.add(new RoseChartBean(Float.parseFloat(perStr), (String)filedName.get(obj) ));
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -220,6 +221,7 @@ public class NightingaleRoseChart extends View {
         oneLableHeight = oneLableHeight>rightRectItemH?oneLableHeight:rightRectItemH;
 
         int allHeight = (oneLableHeight+rightRectSpace)*dataList.size() +rightRectSpace;
+        LogUtil.e(TAG, "测量高度"+getMeasuredHeight()+"   allHeight="+allHeight);
         if(allHeight>getMeasuredHeight()){
             //超出总高度了
             oneLableHeight = getMeasuredHeight() / ((dataList==null || dataList.size()<=0)?1:dataList.size());
@@ -257,10 +259,10 @@ public class NightingaleRoseChart extends View {
 
         rectChart = new RectF(0,0,chartWidth, height);
         rectLable = new RectF(chartWidth,0,width,  height);
+        setMeasuredDimension(width, height);
         if(dataList.size()>0){
             evaluatorLable();
         }
-        setMeasuredDimension(width, height);
         LogUtil.i(TAG, "图表总宽高="+width+"*"+height);
         LogUtil.i(TAG, "chart宽高="+chartWidth+"*"+height);
         LogUtil.i(TAG, "chart直径="+chartSize);
@@ -315,7 +317,7 @@ public class NightingaleRoseChart extends View {
         canvas.drawColor(backColor);
 
         if(isLoading){
-            paintLabel.setTextSize(35);
+            paintLabel.setTextSize(lableTextSize);
             float NullTextLead = FontUtil.getFontLeading(paintLabel);
             float NullTextHeight = FontUtil.getFontHeight(paintLabel);
             float textY = centerPoint.y-NullTextHeight/2+NullTextLead;
@@ -326,7 +328,7 @@ public class NightingaleRoseChart extends View {
         if(dataList==null || dataList.size()<=0) {
 //            paintArc.setStyle(Paint.Style.STROKE);//设置空心
 //            canvas.drawCircle(centerPoint.x, centerPoint.y, chartRaidusOuter, paintArc);
-//            paintLabel.setTextSize(30);
+            paintLabel.setTextSize(lableTextSize);
             float NullTextLead = FontUtil.getFontLeading(paintLabel);
             float NullTextHeight = FontUtil.getFontHeight(paintLabel);
             float textY = centerPoint.y-NullTextHeight/2+NullTextLead;
@@ -334,7 +336,17 @@ public class NightingaleRoseChart extends View {
             return;
         }
 
-       /*
+//        drawDebug(canvas);
+
+       if(!startDraw){
+           startDraw = true;
+           startAnimation();
+       }else{
+           drawChart(canvas);
+       }
+    }
+
+    private void drawDebug(Canvas canvas){
         paintArc.setStyle(Paint.Style.STROKE);//设置空心
         //绘制边界--chart区域
         paintArc.setColor(Color.YELLOW);
@@ -351,14 +363,6 @@ public class NightingaleRoseChart extends View {
         canvas.drawCircle(centerPoint.x, centerPoint.y, chartRaidusOuter+lineLenth, paintArc);
         paintArc.setColor(Color.LTGRAY);
         canvas.drawCircle(centerPoint.x, centerPoint.y, chartRaidusOuter, paintArc);
-        */
-
-       if(!startDraw){
-           startDraw = true;
-           startAnimation();
-       }else{
-           drawChart(canvas);
-       }
     }
 
     public int STYLE_1 = 1;
@@ -499,7 +503,6 @@ public class NightingaleRoseChart extends View {
                 rectR = rectL + rightRectItemW;
                 centerY = i * oneLableHeight + oneLableHeight/2.0f;
                 RectF colorRect = new RectF(rectL, rectT, rectR, rectT+ rightRectItemH);
-//            LogUtil.i(TAG, "绘制lable矩形"+colorRect);
                 bean.setColorRect(colorRect);
             }else{
                 rectT = rightLableTop +rightRectSpace+ i * (oneLableHeight+rightRectSpace);
@@ -511,7 +514,6 @@ public class NightingaleRoseChart extends View {
                 rectT = rectT + (oneLableHeight-rightRectItemH)/2;
                 rectR = rectL + rightRectItemW;
                 RectF colorRect = new RectF(rectL, rectT, rectR, rectT+ rightRectItemH);
-//            LogUtil.i(TAG, "绘制lable矩形"+colorRect);
                 bean.setColorRect(colorRect);
             }
 
@@ -602,6 +604,7 @@ public class NightingaleRoseChart extends View {
 
             /**4、绘制右侧item矩形*/
             canvas.drawRoundRect(bean.getColorRect(), 8, 8, paintArc);//第二个参数是x半径，第三个参数是y半径
+//            LogUtil.i(TAG, "绘制lable矩形"+bean.getColorRect());
             if(selectedIndex == i){
                 canvas.drawRoundRect(bean.getColorRect(), 8, 8, paintSelected);
             }

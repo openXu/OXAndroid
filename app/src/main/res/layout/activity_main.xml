@@ -12,22 +12,10 @@
         style="@style/TitleDefStyle"
         openxu:textcenter="openXu"/>
 
-    
-    <com.openxu.oxlib.view.chart.dashboard.DashBoardView
-        android:id="@+id/dashBoardView"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:background="#ffffff"
-        android:paddingTop="15dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="15dp"
-        android:paddingLeft="10dp"/>
-    
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>

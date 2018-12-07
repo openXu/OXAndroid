@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
+
 import com.openxu.oxlib.R;
 import com.openxu.oxlib.utils.DensityUtil;
 import com.openxu.oxlib.utils.LogUtil;
@@ -41,10 +42,10 @@ public class PieChartLayout extends LinearLayout {
     private int lineLenth = DensityUtil.dip2px(getContext(), 20);    //指示线长度
     private int outSpace = DensityUtil.dip2px(getContext(), 5);
     private int textSpace = DensityUtil.dip2px(getContext(), 3);     //tag指示文字与线的距离
-    private int tagTextSize = (int)getResources().getDimension(R.dimen.text_size_chart_tag);     //饼状图占比指示文字大小
-    private int tagTextColor = getResources().getColor(R.color.text_color_chart_tag); //文字颜色，如果为0，则根据扇形颜色一样;
-    private PieChartLayout.TAG_MODUL tagModul = TAG_MODUL.MODUL_LABLE;   //TAG展示位置
-    private PieChartLayout.TAG_TYPE tagType = TAG_TYPE.TYPE_NUM;         //TAG展示类型
+    private int tagTextSize = (int)getResources().getDimension(R.dimen.text_size_level_small);     //饼状图占比指示文字大小
+    private int tagTextColor = getResources().getColor(R.color.text_color_light_gray); //文字颜色，如果为0，则根据扇形颜色一样;
+    private TAG_MODUL tagModul = TAG_MODUL.MODUL_LABLE;   //TAG展示位置
+    private TAG_TYPE tagType = TAG_TYPE.TYPE_NUM;         //TAG展示类型
 
 
     private PieChartLableView lableView;
@@ -54,8 +55,8 @@ public class PieChartLayout extends LinearLayout {
     private int rectRaidus = 0;     //矩形圆角
     private int rectSpace = DensityUtil.dip2px(getContext(), 8);   //右侧标签上下间距
     private int leftSpace = DensityUtil.dip2px(getContext(), 5);   //右侧标签左右间距
-    private int lableTextSize = (int)getResources().getDimension(R.dimen.text_size_chart_lable);   //饼状图占比指示文字大小
-    private int lableTextColor = getResources().getColor(R.color.text_color_chart_lable);
+    private int lableTextSize = (int)getResources().getDimension(R.dimen.text_size_level_small);   //饼状图占比指示文字大小
+    private int lableTextColor = getResources().getColor(R.color.text_color_light_gray);
 
 
     @Override
@@ -110,7 +111,7 @@ public class PieChartLayout extends LinearLayout {
         TYPE_NUM,       //数量
         TYPE_PERCENT,   //百分比
     }
-    public static enum TAG_MODUL{
+    public enum TAG_MODUL{
         MODEUL_NULL,      //不展示
         MODUL_CHART,      //在扇形图上显示tag
         MODUL_LABLE,      //在lable后面显示tag
@@ -270,7 +271,7 @@ public class PieChartLayout extends LinearLayout {
     /**
      * 设置数据
      */
-    public void setChartData(Class clazz, String per, String name,List<? extends Object> dataList, List<ChartLable> lableList){
+    public void setChartData(Class clazz, String per, String name, List<? extends Object> dataList, List<ChartLable> lableList){
         this.lableList = lableList;
         this.dataList.clear();
         if(dataList!=null){
@@ -281,7 +282,7 @@ public class PieChartLayout extends LinearLayout {
                 filedName.setAccessible(true);
                 for(Object obj : dataList){
                     String perStr = filedPer.get(obj).toString();
-                    PieChartBean bean = new PieChartBean(Integer.parseInt(perStr), (String)filedName.get(obj));
+                    PieChartBean bean = new PieChartBean(Float.parseFloat(perStr), (String)filedName.get(obj));
                     this.dataList.add(bean);
                 }
             }catch (Exception e){

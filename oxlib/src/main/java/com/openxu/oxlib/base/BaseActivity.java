@@ -18,6 +18,9 @@ import com.openxu.oxlib.view.TitleLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * author : openXu
  * create at : 2017/3/6 15:10
@@ -37,7 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected String TAG = "BaseActivity";
     protected Context mContext;
 
-//    protected Unbinder unbinder;
+    protected Unbinder unbinder;
     protected TitleLayout titleLayout;
 
 
@@ -77,7 +80,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
 
-//        unbinder = ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         initView();
         setListener();
         initData();
@@ -165,7 +168,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-//        unbinder.unbind();
+        unbinder.unbind();
         super.onDestroy();
     }
 }
