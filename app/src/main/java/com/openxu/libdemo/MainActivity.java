@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.openxu.libdemo.evenbus.EventBusActivity1;
 import com.openxu.libdemo.evenbus.MessageEvent;
+import com.openxu.libdemo.view.CoordinatorActivity;
 import com.openxu.libdemo.view.ViewListActivity;
 import com.openxu.oxlib.adapter.CommandRecyclerAdapter;
 import com.openxu.oxlib.adapter.ViewHolder;
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity {
 
         itemList = new ArrayList<>();
         itemList.add("自定义控件");
-        itemList.add("EventBus事件发布和订阅");
+        itemList.add("CoordinatorLayout");
         itemList.add("retrofit");
 
         CommandRecyclerAdapter adapter = new CommandRecyclerAdapter<String>(this,
@@ -60,7 +61,7 @@ public class MainActivity extends BaseActivity {
                         intent = new Intent(mContext, ViewListActivity.class);
                         break;
                     case 1:
-                        intent = new Intent(mContext, EventBusActivity1.class);
+                        intent = new Intent(mContext, CoordinatorActivity.class);
                         break;
                 }
                 if(null!=intent)
