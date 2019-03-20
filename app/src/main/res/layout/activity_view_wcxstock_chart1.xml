@@ -34,9 +34,14 @@ android:layout_height="match_parent"
             android:paddingBottom="15dp"
             android:paddingLeft="10dp"/>
 
+        <com.openxu.oxlib.view.stocknew.VedioButton
+            android:id="@+id/vedioBtn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
         <com.openxu.oxlib.view.stocknew.SpeekButton
             android:id="@+id/speekBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
 

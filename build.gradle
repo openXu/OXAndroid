@@ -38,3 +38,16 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+task("hello.groovy"){
+    println("hello groovy!!")
+}
+
+
+
+
+
+
+
+

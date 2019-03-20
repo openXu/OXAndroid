@@ -3,6 +3,7 @@ package com.openxu.libdemo.view;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 
 import com.openxu.libdemo.R;
@@ -20,6 +21,7 @@ import com.openxu.oxlib.view.stocknew.IOPieChart;
 import com.openxu.oxlib.view.stocknew.RadarChart;
 import com.openxu.oxlib.view.stocknew.ShadowLineChart;
 import com.openxu.oxlib.view.stocknew.SpeekButton;
+import com.openxu.oxlib.view.stocknew.VedioButton;
 import com.openxu.oxlib.view.stocknew.bean.BaseChartData;
 import com.openxu.oxlib.view.stocknew.bean.BranchChartData;
 import com.openxu.oxlib.view.stocknew.bean.GsyjChartData;
@@ -48,6 +50,23 @@ public class XmStockChartActivity1 extends AppCompatActivity {
         dashBoardView.setData(dataList);
         dashBoardView.setPro(70);
 
+        VedioButton vedioBtn = findViewById(R.id.vedioBtn);
+        vedioBtn.setListener(new VedioButton.Listener() {
+            @Override
+            public void start() {
+                Log.i(TAG, "开始了");
+            }
+            @Override
+            public void stop() {
+                Log.i(TAG, "结束了");
+            }
+            @Override
+            public void progress(int time) {
+                Log.i(TAG, "进度："+time);
+            }
+        });
+
+
         SpeekButton speekBtn = (SpeekButton)findViewById(R.id.speekBtn);
         speekBtn.setListener(new SpeekButton.Listener() {
             @Override
@@ -55,19 +74,26 @@ public class XmStockChartActivity1 extends AppCompatActivity {
                 LogUtil.i(TAG, "开始录音");
             }
             @Override
+            public void upOutCircle(boolean out) {
+                if(out)
+                    LogUtil.w(TAG, "向上滑出，取消动画");
+                else
+                    LogUtil.i(TAG, "重新滑入，开始动画");
+            }
+            @Override
             public void stop(boolean isCancel) {
                 if(isCancel){
-                    LogUtil.i(TAG, "向上滑， 取消录音");
+                    LogUtil.i(TAG, "取消录音");
                 }else{
                     LogUtil.i(TAG, "结束录音");
                 }
             }
             @Override
             public void progress(int time) {
-                LogUtil.i(TAG, "录音时长"+time+"ms");
-                if(time > 20000){  //最长录制5s
-                    speekBtn.stop();
-                }
+//                LogUtil.i(TAG, "录音时长"+time+"ms");
+//                if(time > 20000){  //最长录制5s
+//                    speekBtn.stop();
+//                }
             }
         });
 

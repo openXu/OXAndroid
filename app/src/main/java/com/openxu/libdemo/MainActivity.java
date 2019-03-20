@@ -9,6 +9,7 @@ import com.openxu.libdemo.evenbus.EventBusActivity1;
 import com.openxu.libdemo.evenbus.MessageEvent;
 import com.openxu.libdemo.view.CoordinatorActivity;
 import com.openxu.libdemo.view.ViewListActivity;
+import com.openxu.libdemo.wchat.WchatActivity;
 import com.openxu.oxlib.adapter.CommandRecyclerAdapter;
 import com.openxu.oxlib.adapter.ViewHolder;
 import com.openxu.oxlib.base.BaseActivity;
@@ -45,6 +46,7 @@ public class MainActivity extends BaseActivity {
         itemList.add("自定义控件");
         itemList.add("CoordinatorLayout");
         itemList.add("retrofit");
+        itemList.add("微信小程序测试");
 
         CommandRecyclerAdapter adapter = new CommandRecyclerAdapter<String>(this,
                 R.layout.item_recycler, itemList){
@@ -62,6 +64,9 @@ public class MainActivity extends BaseActivity {
                         break;
                     case 1:
                         intent = new Intent(mContext, CoordinatorActivity.class);
+                        break;
+                    case 3:
+                        intent = new Intent(mContext, WchatActivity.class);
                         break;
                 }
                 if(null!=intent)
